@@ -26,7 +26,10 @@
         <div v-if="item.childs && isFirstLevelExpanded[index]" class="catalog__item-children">
           <div v-for="child in item.childs" :key="child.id">
             <a
-              :href="child.locale[currentLang].link || child.locale['ru'].link"
+              :href="
+                child.locale[currentLang].link + '' + child.locale[currentLang].id ||
+                child.locale['ru'].link + '' + child.locale['ru'].id
+              "
               class="catalog__item-child"
               target="_blank"
             >
