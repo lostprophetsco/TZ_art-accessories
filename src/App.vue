@@ -44,6 +44,20 @@
             <div class="catalog__item-children-description">
               {{ child.locale[currentLang].cg_description || child.locale['ru'].cg_description }}
             </div>
+
+            <div v-if="child.numchild" class="catalog__item-children">
+              <a
+                v-for="subchild in child.childs"
+                :key="subchild.id"
+                :href="
+                  subchild.locale[currentLang].link + '' + subchild.id ||
+                  subchild.locale['ru'].link + '' + subchild.id
+                "
+                target="_blank"
+              >
+                {{ subchild.locale[currentLang].cg_name || subchild.locale['ru'].cg_name }}
+              </a>
+            </div>
           </div>
         </div>
 
@@ -113,6 +127,7 @@ interface IChilds {
   twitter: IChildrenTwitter[];
   locale: { [lang: string]: IChildrenLocale };
   path_to_top: number[];
+  childs?: IChilds[];
 }
 
 interface IChildrenOg {
@@ -132,12 +147,14 @@ interface IChildrenTwitter {
 interface IChildrenLocale {
   id?: number;
   cg_name?: string;
+  numchild?: number;
   cg_description?: string;
   cg_title?: string;
   cg_slug?: string;
   meta_description?: string;
   meta_keywords?: string;
   link?: string;
+  childs?: IChilds[];
 }
 
 const data = ref<IData[]>(dataJson as IData[]);
